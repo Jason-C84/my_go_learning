@@ -1,12 +1,24 @@
 package ch24
 
 import (
-	"testing"
 	"bytes"
+	"testing"
 )
 
-func BenchmarkConcatStringByAdd (b *testing.B) {
-	strs := []string{"1","2","3","4","5"}
+func BenchmarkConcatStringByBuf(b *testing.B) {
+	strs := []string{"1", "2", "3", "4", "5"}
+	var ret bytes.Buffer
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		for _, v := range strs {
+			ret.WriteString(v)
+		}
+	}
+	b.StopTimer()
+}
+
+func BenchmarkConcatStringByAdd(b *testing.B) {
+	strs := []string{"1", "2", "3", "4", "5"}
 	var ret string
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -14,18 +26,6 @@ func BenchmarkConcatStringByAdd (b *testing.B) {
 			ret += v
 		}
 
-	}
-	b.StopTimer()
-}
-
-func BenchmarkConcatStringByBuf(b *testing.B) {
-	strs := []string{"1","2","3","4","5"}
-	var ret bytes.Buffer
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		for _,v := range  strs {
-			ret.WriteString(v)
-		}
 	}
 	b.StopTimer()
 }
