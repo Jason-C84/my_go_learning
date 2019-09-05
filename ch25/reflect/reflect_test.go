@@ -71,3 +71,20 @@ func TestInvokeByName(t *testing.T) {
 	t.Log(f[1])
 	t.Log(f)
 }
+
+type Customer struct {
+	Id   int
+	Name string
+}
+
+func TestDeepEqual(t *testing.T) {
+	a := map[int]string{1: "one", 2: "two", 3: "three"}
+	b := map[int]string{1: "one", 2: "two", 4: "three"}
+
+	t.Log(reflect.DeepEqual(a, b))
+
+	c := []Customer{{1, "Mike"}, {2, "Nike"}}
+	d := []Customer{{1, "Mike"}, {2, "Nike"}}
+
+	t.Log(reflect.DeepEqual(c, d))
+}
